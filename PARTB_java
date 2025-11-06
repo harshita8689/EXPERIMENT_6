@@ -1,0 +1,46 @@
+package Experiment_6;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+class Student {
+    private String name;
+    private double marks;
+
+    public Student(String name, double marks) {
+        this.name = name;
+        this.marks = marks;
+    }
+
+    public String getName() { return name; }
+    public double getMarks() { return marks; }
+
+    @Override
+    public String toString() {
+        return String.format("Student{name='%s', marks=%.2f}", name, marks);
+    }
+}
+
+public class PartB {
+    public static void main(String[] args) {
+        List<Student> students = Arrays.asList(
+            new Student("Ankesh", 82.5),
+            new Student("Aaditya", 68.0),
+            new Student("Ankit", 91.0),
+            new Student("Yuvraj", 74.5),
+            new Student("Piyush", 88.0)
+        );
+
+        System.out.println("Original List of Students:");
+        students.forEach(System.out::println);
+
+        List<String> topStudents = students.stream()
+                .filter(s -> s.getMarks() > 75)                      
+                .sorted(Comparator.comparingDouble(Student::getMarks).reversed()) 
+                .map(Student::getName)                              
+                .collect(Collectors.toList());                      
+
+        System.out.println("\nStudents scoring above 75% (sorted by marks):");
+        topStudents.forEach(System.out::println);
+    }
+}
